@@ -1,11 +1,14 @@
 package stepDefinitions;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import ObejectRepository.AccountPage;
 import ObejectRepository.HomePage;
@@ -16,9 +19,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.junit.Cucumber;
 
-@RunWith(Cucumber.class)
+
+
+//RunWith(Cucumber.class)
 public class stepDefinition extends base {
 	
 	@Given("^Initalize driver in Chrome and login with username \"([^\"]*)\" and password \"([^\"]*)\"$")
@@ -48,15 +52,41 @@ public class stepDefinition extends base {
 
 	    @Then("Click on all tabs if button new present click and the cancel")
 	    public void if_new_account_button_is_present_clicks_on_new_and_then_cancel() throws InterruptedException  {
-	    	
+	    	executor = (JavascriptExecutor)driver;
 	    	Servicios serv = new Servicios(driver);
-			executor = (JavascriptExecutor)driver;
+			WebDriverWait w = new WebDriverWait(driver , 10);
 			
-			jsClick(serv.TabChatter());
-			jsClickNew(serv.TabCuentas() );
-			jsClickNew(serv.TabContactos());
-			jsClickNew( serv.TabCasos());
-			JsClickInforme( serv.TabInformes());
+			
+
+
+			for (WebElement i : serv.listaElementosMenu()) {
+				
+				String tabName = (i.getText());
+				jsClick(i);
+				
+					List<WebElement> botonesFrames = framesPresent(tabName);
+				
+					if ( serv.buttonNewPresent()!= 0 && botonesFrames.size() == 0 ) {
+						
+						jsClick(serv.ButtonsNuevo());
+						serv.ButtonsCancelar().click();
+					}
+					
+					 if  ( botonesFrames.size() != 0 ) {
+					
+						jsClick(BotonFrames(tabName));
+															
+							if (serv.pirmerTab().size()==0) {
+								w.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(serv.frameDashboard()));
+								jsClick(serv.BotonCancelarPanel());
+
+							} else {
+								w.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(serv.Frame()));
+								jsClick(serv.BotonCancelarInforme());
+					 		}
+		
+						driver.switchTo().parentFrame();}
+			}
 		
 	    }
 
@@ -102,10 +132,11 @@ public class stepDefinition extends base {
 	    public void modify_and_on_crated_last_account(String rating, String upsellopportunity, String type) throws Throwable {
 
 	    	AccountPage ap = new AccountPage(driver);
+	    	WebDriverWait w = new WebDriverWait(driver , 5);
 		
 			ModifyAccount();
 		
-			//selectDropdownText(ap.InputOportunidad(),upsellopportunity);
+			selectDropdownText(ap.InputOportunidad(),upsellopportunity);
 			selectDropdownText(ap.InputValoracion(), rating);
 			selectDropdownText(ap.InputTipo(),type);
 			jsClick(ap.ButtonSave());
@@ -118,21 +149,26 @@ public class stepDefinition extends base {
 			Iterator<String> it = win.iterator();
 			String parentId = it.next();
 			String childId =it.next();
+			  
 			driver.switchTo().window(childId);
-			Thread.sleep(3000);
-			 
-			ap.DetailsAccount().click();
-			Thread.sleep(5000);
+			
+			System.out.println(driver.getCurrentUrl());
+			w.until(ExpectedConditions.urlContains("/view"));		    
 
+			ap.DetailsAccount().click();
+		
+			System.out.println(driver.getCurrentUrl());
+			w.until(ExpectedConditions.urlContains("Account"));		    
+
+			//Assertions
 			SoftAssert sa = new SoftAssert(); 
 		    sa.assertEquals(rating, ap.DetailsValoracion().getText());
 		    sa.assertEquals(type, ap.DetailsTipo().getText());
-		    //sa.assertEquals(upsellopportunity, ap.DetailsOpportunity().getText());
+		    sa.assertEquals(upsellopportunity, ap.DetailsOpportunity().getText());
 		    sa.assertAll();
 		        
 		    driver.switchTo().window(parentId);
-		    Thread.sleep(2000);
-		    
+		    w.until(ExpectedConditions.urlContains("Name=Recent"));		    
 	    }
 	    
 	    
@@ -155,12 +191,11 @@ public class stepDefinition extends base {
 	     
 	    AccountPage ap = new AccountPage(driver);
 	    ap.TextoError().getText();
-	     
-		
-	
-		 SoftAssert sa = new SoftAssert(); 
-	     sa.assertEquals(strArg1, ap.TextoError().getText());
-	     sa.assertAll();
+	    
+	    //Assert
+		SoftAssert sa = new SoftAssert(); 
+	    sa.assertEquals(strArg1, ap.TextoError().getText());
+	    sa.assertAll();
 	     
 	    }
 	    

@@ -11,7 +11,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-//import Excel.ExcelData;
+import Excel.ExcelData;
 import ObejectRepository.AccountPage;
 import ObejectRepository.HomePage;
 import ObejectRepository.LoginPage;
@@ -47,15 +47,15 @@ public class AccountTests extends base {
 	}
 	
 	
-	//@DataProvider
-	//public Object[][] getDataExcel() throws IOException {
+	@DataProvider
+	public Object[][] getDataExcel() throws IOException {
 		
-		//ExcelData d = new ExcelData();
-		//Object[][] dataExcel = d.getData() ;
+		ExcelData d = new ExcelData();
+		Object[][] dataExcel = d.getData() ;
 		
-		//return dataExcel;
+		return dataExcel;
 		
-	//}
+	}
 	
 	@Test (dataProvider="getDataExcel")
 	
@@ -63,9 +63,12 @@ public class AccountTests extends base {
 		
 		AccountPage ap = new AccountPage(driver);
 		String[] fechaValue = fecha.split("-");
-		
-		//CreateAccount(nombre);
-		
+	
+    	NewAccount();
+   
+    	jsClick(ap.InputName());
+		ap.InputName().sendKeys(nombre);
+	
 		selectDropdownText(ap.InputValoracion(),valoracion);
 		//Thread.sleep(2000);
 		//selectDropdownText(ap.InputTipo(),tipo);
@@ -81,7 +84,6 @@ public class AccountTests extends base {
 		
 		//Assertion
 		String url = driver.getCurrentUrl();
-		System.out.println("Url found :"+url);
         SoftAssert sa = new SoftAssert(); 
         sa.assertTrue(url.contains("view"));
         sa.assertAll();
@@ -97,8 +99,13 @@ public class AccountTests extends base {
 		jsClick(serv.TabCuentas());
 		String nombre = ap.GetNameDetail().getText();
 		String valoracion = "Warm";
+	
+    	NewAccount();
+    	
+    	jsClick(ap.InputName());
+		ap.InputName().sendKeys(nombre);
 		
-		//CreateAccount(nombre);
+		
 		selectDropdownText(ap.InputValoracion(),valoracion);
 
 		jsClick(ap.ButtonSave());

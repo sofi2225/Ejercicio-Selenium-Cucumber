@@ -7,8 +7,7 @@
         <methods>
           <include name="Quit"/>
           <include name="initialize"/>
-          <include name="CreateAccountWithName"/>
-          <include name="CreateAccounts"/>
+          <include name="CreateAccounts" invocation-numbers="2"/>
         </methods>
       </class> <!-- Test.AccountTests -->
     </classes>

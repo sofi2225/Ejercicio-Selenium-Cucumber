@@ -23,10 +23,14 @@ public class calendar extends base {
 
         executor.executeScript("arguments[0].scrollIntoView();", ap.InputFecha());
         jsClick(ap.InputFecha());
-       // Thread.sleep(6000);
+       
+        WebElement yearValue= driver.findElement(By.xpath("//select[@class='slds-select']"));
+        WebElement yearOption = driver.findElement(By.xpath("//select[@class='slds-select']/option[@value='"+year+"']"));
 		
-       WebElement mesValue= driver.findElement(By.xpath("//div[@class=\"slds-datepicker__filter slds-grid\"]/div/h2"));
+        WebElement mesValue= driver.findElement(By.xpath("//div[@class=\"slds-datepicker__filter slds-grid\"]/div/h2"));
 		
+        
+       
         //WebElement mesValue= driver.findElement(By.cssSelector("[id*='month-title']"));
 
         
@@ -41,7 +45,14 @@ public class calendar extends base {
 				
 					driver.findElement(By.xpath("//button[@title='Mes siguiente']")).click();
 				}
-				
+		
+		if (yearOption.getText() != year) {
+	        	
+	            yearValue.click();   
+	            System.out.println(year);
+	            GetInView(yearOption);
+	            yearOption.click();
+	        }
 				
 				List<WebElement> dates = driver.findElements(By.xpath("//span[@class='slds-day']"));
 

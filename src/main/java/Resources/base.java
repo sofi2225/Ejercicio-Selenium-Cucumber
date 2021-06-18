@@ -1,8 +1,7 @@
 package Resources;
 
-import java.io.FileInputStream;
+import java.io.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.asserts.SoftAssert;
 
 import Excel.ExcelData;
 import ObejectRepository.AccountPage;
@@ -40,7 +38,7 @@ public class base {
 		
 		if (browserName.contains("chrome")) {
 			
-			System.setProperty("webdriver.chrome.driver","/Users/sofi/Documents/Drivers/chromedriver");
+			System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"/chromedriver");
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--disable-notifications");
 			
@@ -198,6 +196,21 @@ public class base {
 		return dataExcel;
 	 }
 	 
+	public  WebElement BotonFrames(String m) {
+		
+		WebElement botonFrames = driver.findElement(By.xpath("//div[contains(text(),'Nuevo "+m.toLowerCase().charAt(0) +"')]"));
+		return botonFrames;
+		
+	}
+	
+
+	
+	public  List<WebElement> framesPresent(String m) {
+		
+		List<WebElement> framesPresent = driver.findElements(By.xpath("//div[contains(text(),'Nuevo "+m.toLowerCase().charAt(0) +"')]"));
+		return framesPresent;
+	}
+ 
 	 
 }
 

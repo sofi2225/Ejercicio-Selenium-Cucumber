@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+    <test thread-count="5" name="Navigation">
+    <classes>
+      <class name="Test.NavigateAllTabs"/>
+      </classes>
+     </test>
+     
+     <test thread-count="5" name="Tests">
+    <classes>
+      <class name="Test.AccountTests"/>
+      </classes>
+     </test>
+     
+ 	<test thread-count="5" name="Edits">
+    <classes>
+      <class name="Test.AccountEdits"/>
+      </classes>
+     </test>
+   
+     
+</suite> <!-- Suite -->

@@ -24,7 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 			
 		
 			
-			FileInputStream fis = new FileInputStream("//Users//sofi//Desktop//DataDemo.xlsx");
+			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"//DataDemo.xlsx");
 		
 			@SuppressWarnings("resource")
 			XSSFWorkbook libro = new XSSFWorkbook(fis);

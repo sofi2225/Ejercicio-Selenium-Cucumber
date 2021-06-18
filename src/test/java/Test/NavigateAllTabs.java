@@ -1,9 +1,13 @@
 package Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 
 import org.testng.annotations.BeforeTest;
@@ -15,6 +19,7 @@ import ObejectRepository.Servicios;
 import Resources.base;
 
 public class NavigateAllTabs extends base{
+	
 
 	public  WebDriver driver;
 
@@ -43,19 +48,45 @@ public class NavigateAllTabs extends base{
 		home.ButtonService().click();
 	}
 	
+	
 
 	@Test 
 
 	public void Clicks() throws InterruptedException {
 		Servicios serv = new Servicios(driver);
-		
-		jsClick(serv.TabChatter());
-		jsClickNew(serv.TabCuentas() );
-		jsClickNew(serv.TabContactos());
-		jsClickNew( serv.TabCasos());
-		JsClickInforme( serv.TabInformes());
-		
-	}
+		 WebDriverWait w = new WebDriverWait(driver , 8);
+
+
+		for (WebElement i : serv.listaElementosMenu()) {
+			
+			String tabName = (i.getText());
+			jsClick(i);
+			
+				List<WebElement> botonesFrames = framesPresent(tabName);
+			
+				if ( serv.buttonNewPresent()!= 0 && botonesFrames.size() == 0 ) {
+					
+					jsClick(serv.ButtonsNuevo());
+					serv.ButtonsCancelar().click();
+				}
+				
+				 if  ( botonesFrames.size() != 0 ) {
+				
+					jsClick(BotonFrames(tabName));
+														
+						if (serv.pirmerTab().size()==0) {
+							w.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(serv.frameDashboard()));
+							jsClick(serv.BotonCancelarPanel());
+
+						} else {
+							w.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(serv.Frame()));
+							jsClick(serv.BotonCancelarInforme());
+				 		}
+	
+					driver.switchTo().parentFrame();}
+		}
+	
+    }
 	
 	@AfterTest
 	public void Quit() {

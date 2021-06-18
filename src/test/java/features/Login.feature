@@ -8,7 +8,9 @@ When User is on Service Page
 
 Then Click on all tabs if button new present click and the cancel 
 
-@Skip
+
+
+#@Skip
 Scenario: Create Accounts 
 
 Given Initalize driver in Chrome and login with username "sofi@tdc.com" and password "SSALES1234" 
@@ -18,7 +20,9 @@ When User is on Account Page
 Then Create "2" complete accounts and "1" account with empty name field 
 And Create account with previous account name 
 
-@Skip
+
+
+#@Skip
 Scenario: Edit Accounts 
 
 Given Initalize driver in Chrome and login with username "sofi@tdc.com" and password "SSALES1234" 
@@ -32,7 +36,9 @@ Examples:
 |Warm						|Yes							  |Prospect		|
 
 
-@Skip
+
+
+#@Skip
 Scenario: Employee Number
 
 Given Initalize driver in Chrome and login with username "sofi@tdc.com" and password "SSALES1234" 

@@ -100,6 +100,7 @@ public class AccountEdits extends base {
 		ModifyAccount();
 		GetInView(ap.InputEmpleados());
 		jsClick(ap.InputEmpleados());
+		ap.InputEmpleados().clear();
 		ap.InputEmpleados().sendKeys(employeeNumber);
 		ap.BlankClick().click();
 	    jsClick(ap.ButtonSave());
@@ -121,7 +122,7 @@ public class AccountEdits extends base {
 	@AfterTest
 	public void Quit() {
 		
-		//driver.quit();
+		driver.quit();
 		
 		System.out.println("I run after Tests Account Edits");
 	}
