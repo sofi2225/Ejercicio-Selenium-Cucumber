@@ -83,36 +83,7 @@ public class base {
 		executor.executeScript("arguments[0].click();", webElement);
 	}
 	
-	
-	 public static void jsClickNew(WebElement webElement) throws InterruptedException  {
-		 
-		 	
-			executor.executeScript("arguments[0].click();", webElement);
-			driver.findElement(By.cssSelector("a[title='Nuevo']")).click();
-			driver.findElement(By.xpath("//button[@title='Cancelar']|//button[text()='Cancelar']")).click();
-		
-				
-		}
-	 
-	 
-	 public static void JsClickInforme( WebElement webElement) throws InterruptedException {
 
-			executor.executeScript("arguments[0].click();", webElement);
-			driver.findElement(By.cssSelector("span[data-aura-class='folderActionBar'] ul li a")).click();
-			Thread.sleep(3000);
-			
-			driver.switchTo().frame(0);
-			Thread.sleep(2000);
-			
-			WebElement cancel = driver.findElement(By.cssSelector("[class='slds-button slds-button_neutral report-type-cancel']"));
-			executor.executeScript("arguments[0].click();", cancel);
-			
-			driver.switchTo().parentFrame();
-	 }
-	 
-	 
-	 
-	 
 	 public static void selectDropdownText(WebElement webElement,String text) throws InterruptedException {
 		 
 		 	executor.executeScript("arguments[0].scrollIntoView();", webElement);
@@ -142,7 +113,7 @@ public class base {
 			
 			
 			selectDropdownText(ap.InputValoracion(),valoracion);
-			//Thread.sleep(2000);
+			
 			//selectDropdownText(ap.InputTipo(),tipo);
 			
 			jsClick(ap.InputEmpleados());
@@ -154,7 +125,7 @@ public class base {
 			c.Calendario(fechaValue[1], fechaValue[0], fechaValue[2], driver);
 			jsClick(ap.ButtonSave());
 
-			Thread.sleep(7000);
+			Thread.sleep(3000);
 			
 			//Assertion
 			String url = driver.getCurrentUrl();
@@ -203,14 +174,22 @@ public class base {
 		
 	}
 	
-
-	
 	public  List<WebElement> framesPresent(String m) {
 		
 		List<WebElement> framesPresent = driver.findElements(By.xpath("//div[contains(text(),'Nuevo "+m.toLowerCase().charAt(0) +"')]"));
 		return framesPresent;
 	}
  
+	 public String getUrl() {
+		 
+		 String currentUrl = driver.getCurrentUrl().toString();
+		 return currentUrl;
+	 }
+	
+	 public void implicitWaitChange(long time) {
+		 
+			driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+	 }
 	 
 }
 

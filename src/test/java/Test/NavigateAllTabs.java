@@ -27,11 +27,9 @@ public class NavigateAllTabs extends base{
 @BeforeTest
 	
 	public void initialize() throws IOException {
-	
-	System.out.println("I run befote Tests Navigate");
 		
 		driver = initializeDriver();	
-		driver.get("https://tdccom-dev-ed.my.salesforce.com");
+		driver.get("https://login.salesforce.com");
 		executor = (JavascriptExecutor)driver;
 		
 		LoginPage log = new LoginPage(driver);

@@ -29,7 +29,7 @@ public class AccountEdits extends base {
 	System.out.println("I run befote Tests Account Edits");
 		
 		driver = initializeDriver();	
-		driver.get("https://tdccom-dev-ed.my.salesforce.com");
+		driver.get("https://login.salesforce.com");
 		executor = (JavascriptExecutor)driver;
 		
 		LoginPage log = new LoginPage(driver);

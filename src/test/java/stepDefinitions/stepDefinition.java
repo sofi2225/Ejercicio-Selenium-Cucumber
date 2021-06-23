@@ -15,6 +15,7 @@ import ObejectRepository.HomePage;
 import ObejectRepository.LoginPage;
 import ObejectRepository.Servicios;
 import Resources.base;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,8 +30,10 @@ public class stepDefinition extends base {
     public void initalize_driver_in_chrome_and_login_with_username_something_and_password_something(String strArg1, String strArg2) throws Throwable {
         
 			driver = initializeDriver();	
-			driver.get("https://tdccom-dev-ed.my.salesforce.com");
+			driver.get("https://login.salesforce.com");
 			LoginPage log = new LoginPage(driver);
+			
+			
 			//Login
 			log.LogUsername().sendKeys(strArg1);
 			log.LogPassword().sendKeys(strArg2);
@@ -46,7 +49,7 @@ public class stepDefinition extends base {
 			//Menu
 			home.ButtonWaffle().click();
 			home.ButtonService().click();
-			
+		
 		}
 		
 
@@ -56,9 +59,9 @@ public class stepDefinition extends base {
 	    	Servicios serv = new Servicios(driver);
 			WebDriverWait w = new WebDriverWait(driver , 10);
 			
-			
 
-
+			implicitWaitChange(2);
+			//Nav all tabs
 			for (WebElement i : serv.listaElementosMenu()) {
 				
 				String tabName = (i.getText());
@@ -85,8 +88,12 @@ public class stepDefinition extends base {
 								jsClick(serv.BotonCancelarInforme());
 					 		}
 		
-						driver.switchTo().parentFrame();}
+						driver.switchTo().parentFrame();
+						}
+					 
 			}
+			
+			implicitWaitChange(10);
 		
 	    }
 
@@ -199,6 +206,12 @@ public class stepDefinition extends base {
 	     
 	    }
 	    
+	    @After
+	    public void quit() {
+	    	
+	    	driver.quit();
+	    	
+	    }
 	    
 	    
 	    

@@ -26,19 +26,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 			
 			FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"//DataDemo.xlsx");
 		
-			@SuppressWarnings("resource")
+		
 			XSSFWorkbook libro = new XSSFWorkbook(fis);
 				
-			
 			XSSFSheet hoja = libro.getSheetAt(0);
 			
-			//System.out.println(hoja);
+			
 			Iterator<Row> filas = hoja.iterator();
 			Iterator<Cell> celdas;
 	 		
 			Row fila;
 		
-			@SuppressWarnings("unused")
 			Cell celda;
 			
 				while (filas.hasNext()) 
@@ -47,12 +45,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 				fila = filas.next();
 				celdas = fila.cellIterator();
 				contadorF++;
-				//System.out.println(contadorF);
 		
 				
 					while (celdas.hasNext()) {
 		
 						celda =celdas.next();
+						celda.getCellType();
+					
 					}
 				}
 				
@@ -69,8 +68,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 		
 				}
+					libro.close();	
 			}
 				return data;
+		
+			
 		}	
 	}
 		

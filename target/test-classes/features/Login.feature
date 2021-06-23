@@ -22,7 +22,7 @@ And Create account with previous account name
 
 
 
-#@Skip
+
 Scenario: Edit Accounts 
 
 Given Initalize driver in Chrome and login with username "sofi@tdc.com" and password "SSALES1234" 
@@ -38,7 +38,7 @@ Examples:
 
 
 
-#@Skip
+
 Scenario: Employee Number
 
 Given Initalize driver in Chrome and login with username "sofi@tdc.com" and password "SSALES1234" 
